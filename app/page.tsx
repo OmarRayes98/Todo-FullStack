@@ -1,5 +1,6 @@
 
 import AddTodoForm from "@/components/AddTodoForm";
+import TodoTable from "@/components/TodoTable";
 
 export default  function Home() {
 
@@ -14,6 +15,7 @@ export default  function Home() {
       }
       </ul> */}
       <AddTodoForm/>
+      <TodoTable/>
 
 
     </main>
