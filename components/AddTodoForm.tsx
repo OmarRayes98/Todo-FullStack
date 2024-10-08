@@ -2,8 +2,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+
 // import { Label } from "@/components/ui/label";
 import { Plus } from "lucide-react";
 import {
@@ -21,16 +22,26 @@ import { useForm } from "react-hook-form"
 
 
 import { todoFormSchema, TodoFormValues } from "@/schema";
+import { createTodListAction } from "@/actions/todo.actions";
+import { Checkbox } from "./ui/checkbox";
 
 const AddTodoForm = () => {
 
       // This can come from your database or API.
 const defaultValues: Partial<TodoFormValues> = {
-    title:"Default Title",
-    body:"Default Body",
+    title:"",
+    body:"",
+    completed:false,
   }
   
-    const onSubmit = ()=>{
+    const onSubmit = async(data:TodoFormValues)=>{
+      console.log(data)
+      await createTodListAction(
+        {
+        title:data.title,
+        body:data.body,
+        completed:data.completed
+      })
   
     }
   
@@ -96,12 +107,25 @@ const defaultValues: Partial<TodoFormValues> = {
         </FormItem>
       )}
     />
+          <FormField
+      control={form.control}
+      name="completed"
+      render={({ field }) => (
+        <FormItem>
+          <FormControl>
+            <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+          </FormControl>
+          <FormLabel>Completed</FormLabel>
+
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+
+        <Button type="submit">Save changes</Button>
 
           </form>
-         </Form>
-      <DialogFooter>
-        <Button type="submit">Save changes</Button>
-      </DialogFooter>
+          </Form>
     </DialogContent>
   </Dialog>
   )

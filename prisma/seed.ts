@@ -9,8 +9,8 @@ async function main() {
     data: Array.from({length:25}, ()=>{
 
       return {
-        title: faker.lorem.text(),
-        body: faker.lorem.paragraph(),
+        title: faker.lorem.words({min:2 ,max:5}),
+        body: faker.lorem.words({min:1 ,max:10}),
       }
       
     }),

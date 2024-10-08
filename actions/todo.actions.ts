@@ -19,8 +19,14 @@ export const getTodListAction = async ()=>{
 
 }
 
-export const createTodListAction = async ()=>{
-
+export const createTodListAction = async ({title,body,completed}:{title:string,body?:string|undefined,completed:boolean})=>{
+await prisma.todo.create({
+    data:{
+    title:title,
+    body:body,
+    completed:completed
+    }
+})
 }
 
 export const updateTodListAction = async ()=>{
