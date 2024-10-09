@@ -4,6 +4,7 @@
 import { ITodo } from "@/interfaces";
 //for all server action that is gonna create :
 import { PrismaClient } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 const prisma = new PrismaClient();
 
@@ -28,6 +29,9 @@ await prisma.todo.create({
     completed:completed
     }
 })
+
+revalidatePath("/")
+
 }
 
 export const updateTodListAction = async ()=>{
@@ -39,5 +43,9 @@ export const deleteTodListAction = async ({id}:{id:string})=>{
         where:{
             id
         }
-    })
+    });
+
+     // refresh the page default as default not the layout 
+     //path : the path of url . in out case is / . but if has /todos shoud write /todos
+    revalidatePath("/")
 }

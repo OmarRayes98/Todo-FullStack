@@ -14,7 +14,7 @@ import TodoTableActions from "./TodoTableActions"
   
 
   
-  export default function TodoTable({todos}:{todos:ITodo[]}) {
+export default function TodoTable({todos}:{todos:ITodo[]}) {
 
 
     return (
