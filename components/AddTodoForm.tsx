@@ -24,8 +24,14 @@ import { useForm } from "react-hook-form"
 import { todoFormSchema, TodoFormValues } from "@/schema";
 import { createTodListAction } from "@/actions/todo.actions";
 import { Checkbox } from "./ui/checkbox";
+import Spinner from "./Spinner";
+import { useState } from "react";
 
 const AddTodoForm = () => {
+
+  const [loading,setLoading]=useState(false);
+  const [open,setOpen]=useState(false);
+
 
       // This can come from your database or API.
 const defaultValues: Partial<TodoFormValues> = {
@@ -36,12 +42,17 @@ const defaultValues: Partial<TodoFormValues> = {
   
     const onSubmit = async(data:TodoFormValues)=>{
       console.log(data)
+      setLoading(true);
+
       await createTodListAction(
         {
         title:data.title,
         body:data.body,
         completed:data.completed
       })
+
+      setLoading(false);
+      setOpen(false);
   
     }
   
@@ -53,7 +64,7 @@ const defaultValues: Partial<TodoFormValues> = {
 
     
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
     <DialogTrigger asChild>
       <Button>
         <Plus size={14} className="me-1" />
@@ -122,7 +133,18 @@ const defaultValues: Partial<TodoFormValues> = {
       )}
     />
 
-        <Button type="submit">Save changes</Button>
+        <Button type="submit" disabled={loading}>
+          {
+            loading?(
+              <>
+              <Spinner /> Saving
+              </>
+            ):(
+              "Save"
+            )
+          }
+          
+        </Button>
 
           </form>
           </Form>

@@ -15,7 +15,9 @@ Action : I mean it's server action
 
 export const getTodListAction = async ():Promise<Array<ITodo>>=>{
 
-    const todos = await prisma.todo.findMany();
+    const todos = await prisma.todo.findMany({orderBy:{
+        createdAt:"desc"
+    }});
     return todos;
     // Error Handling
 
