@@ -1,8 +1,9 @@
 "use server";
 
 
+import { ITodo } from "@/interfaces";
 //for all server action that is gonna create :
-import { PrismaClient } from "@prisma/client/extension";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -11,7 +12,7 @@ getTodListAction
 Action : I mean it's server action
 */
 
-export const getTodListAction = async ()=>{
+export const getTodListAction = async ():Promise<Array<ITodo>>=>{
 
     const todos = await prisma.todo.findMany();
     return todos;
@@ -33,6 +34,10 @@ export const updateTodListAction = async ()=>{
 
 }
 
-export const deleteTodListAction = async ()=>{
-
+export const deleteTodListAction = async ({id}:{id:string})=>{
+    await prisma.todo.delete({
+        where:{
+            id
+        }
+    })
 }
