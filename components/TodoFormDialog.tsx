@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Input } from "@/components/ui/input";
 
 // import { Label } from "@/components/ui/label";
-import { Plus } from "lucide-react";
+import { Pen, Plus } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -22,12 +22,13 @@ import { useForm } from "react-hook-form"
 
 
 import { todoFormSchema, TodoFormValues } from "@/schema";
-import { createTodListAction } from "@/actions/todo.actions";
+import { createTodListAction, updateTodListAction } from "@/actions/todo.actions";
 import { Checkbox } from "./ui/checkbox";
 import Spinner from "./Spinner";
 import { useState } from "react";
+import { ITodo } from "@/interfaces";
 
-const AddTodoForm = () => {
+const TodoFormDialog = ({isEditDialog,oldTodoData}:{isEditDialog?:boolean,oldTodoData?:ITodo}) => {
 
   const [loading,setLoading]=useState(false);
   const [open,setOpen]=useState(false);
@@ -35,21 +36,34 @@ const AddTodoForm = () => {
 
       // This can come from your database or API.
 const defaultValues: Partial<TodoFormValues> = {
-    title:"",
-    body:"",
-    completed:false,
+    title:oldTodoData ? oldTodoData.title :"",
+    body:oldTodoData ? oldTodoData.body as string :"",
+    completed:oldTodoData ? oldTodoData.completed :false,
   }
   
     const onSubmit = async(data:TodoFormValues)=>{
       console.log(data)
       setLoading(true);
 
-      await createTodListAction(
-        {
-        title:data.title,
-        body:data.body,
-        completed:data.completed
-      })
+      if(isEditDialog){
+
+        await updateTodListAction(
+          {
+            id:(oldTodoData as ITodo).id,
+            title:data.title,
+            body:data.body as string,
+            completed:data.completed
+          })
+
+      }else{
+        await createTodListAction(
+          {
+          title:data.title,
+          body:data.body,
+          completed:data.completed
+        })
+      }
+
 
       setLoading(false);
       setOpen(false);
@@ -62,18 +76,30 @@ const defaultValues: Partial<TodoFormValues> = {
       mode: "onChange",
     })
 
-    
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
     <DialogTrigger asChild>
       <Button>
-        <Plus size={14} className="me-1" />
-        New Todo
+        {
+          isEditDialog?(
+            <>
+            <Pen size={16} className="me-1" />
+            </>
+          ):
+          (
+            <>
+            <Plus size={14} className="me-1" />
+            New Todo
+            </>
+          )
+        }
+      
       </Button>
     </DialogTrigger>
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
-        <DialogTitle>Edit profile</DialogTitle>
+        <DialogTitle>{isEditDialog ? "Edit this Todo":"Create Todo"}</DialogTitle>
         <DialogDescription>
           Make changes to your profile here. Click save when you&apos;re
           done.
@@ -91,7 +117,7 @@ const defaultValues: Partial<TodoFormValues> = {
             <FormItem>
               <FormLabel>Title</FormLabel>
               <FormControl>
-                <Input placeholder="Go to gym" {...field} />
+                <Input placeholder="Enter the Title" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -153,4 +179,4 @@ const defaultValues: Partial<TodoFormValues> = {
   )
 }
 
-export default AddTodoForm
+export default TodoFormDialog

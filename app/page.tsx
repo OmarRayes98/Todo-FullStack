@@ -1,6 +1,6 @@
 
 import { getTodListAction } from "@/actions/todo.actions";
-import AddTodoForm from "@/components/AddTodoForm";
+import TodoFormDialog from "@/components/TodoFormDialog";
 import TodoTable from "@/components/TodoTable";
 
 export default async  function Home() {
@@ -10,7 +10,7 @@ export default async  function Home() {
   return (
     <main className="container">
       <div className="mx-auto flex w-full lg:w-3/4 flex-col justify-center space-y-4 mt-10">
-      <AddTodoForm/>
+      <TodoFormDialog/>
       <TodoTable todos={todos}/>
       </div>
 

@@ -36,7 +36,20 @@ revalidatePath("/")
 
 }
 
-export const updateTodListAction = async ()=>{
+export const updateTodListAction = async ({id,title,body,completed}:ITodo)=>{
+
+    await prisma.todo.update({
+        where:{
+            id
+        },
+        data:{
+            title,
+            body,
+            completed
+        }
+    });
+
+    revalidatePath("/")
 
 }
 
