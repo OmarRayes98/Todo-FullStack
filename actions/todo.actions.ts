@@ -23,12 +23,13 @@ export const getTodListAction = async ():Promise<Array<ITodo>>=>{
 
 }
 
-export const createTodListAction = async ({title,body,completed}:{title:string,body?:string|undefined,completed:boolean})=>{
+export const createTodListAction = async ({title,body,completed,userId}:{title:string,body?:string|undefined,completed:boolean,userId:string|null})=>{
 await prisma.todo.create({
     data:{
     title:title,
     body:body,
-    completed:completed
+    completed:completed,
+    user_id:userId as string,
     }
 })
 

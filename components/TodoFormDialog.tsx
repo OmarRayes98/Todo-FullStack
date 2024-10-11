@@ -28,7 +28,7 @@ import Spinner from "./Spinner";
 import { useState } from "react";
 import { ITodo } from "@/interfaces";
 
-const TodoFormDialog = ({isEditDialog,oldTodoData}:{isEditDialog?:boolean,oldTodoData?:ITodo}) => {
+const TodoFormDialog = ({isEditDialog,oldTodoData,userId}:{isEditDialog?:boolean,oldTodoData?:ITodo,userId?:string|null}) => {
 
   const [loading,setLoading]=useState(false);
   const [open,setOpen]=useState(false);
@@ -60,7 +60,8 @@ const defaultValues: Partial<TodoFormValues> = {
           {
           title:data.title,
           body:data.body,
-          completed:data.completed
+          completed:data.completed,
+          userId:userId ?userId:""
         })
       }
 
