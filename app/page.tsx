@@ -1,5 +1,5 @@
 
-import { getTodListAction } from "@/actions/todo.actions";
+import { getUserTodListAction } from "@/actions/todo.actions";
 import TodoFormDialog from "@/components/TodoFormDialog";
 import TodoTable from "@/components/TodoTable";
 import { auth } from "@clerk/nextjs/server";
@@ -8,7 +8,7 @@ export default async  function Home() {
 
   const {userId} = auth();
 
-  const todos = await getTodListAction();
+  const todos = await getUserTodListAction({userId});
 
   return (
     <main className="container">

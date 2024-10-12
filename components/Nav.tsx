@@ -3,7 +3,8 @@ import { ModeToggle } from "./ModeToggle";
 
 const Nav = () => {
   return (
-    <nav className="container flex items-center justify-between">
+    <div className="container">
+      <nav className="flex items-center justify-between py-5 w-full lg:w-3/4 mx-auto">
         <ModeToggle/>
       <SignedIn>
         {/* Mount the UserButton component */}
@@ -14,6 +15,7 @@ const Nav = () => {
         <SignInButton />
       </SignedOut>
     </nav>
+    </div>
   );
 };
 

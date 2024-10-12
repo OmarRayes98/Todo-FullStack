@@ -13,9 +13,14 @@ getTodListAction
 Action : I mean it's server action
 */
 
-export const getTodListAction = async ():Promise<Array<ITodo>>=>{
+export const getUserTodListAction = async ({userId}:{userId:string|null}):Promise<Array<ITodo>>=>{
 
-    const todos = await prisma.todo.findMany({orderBy:{
+    const todos = await prisma.todo.findMany(
+    {
+        where:{
+            user_id:userId as string
+        },
+        orderBy:{
         createdAt:"desc"
     }});
     return todos;

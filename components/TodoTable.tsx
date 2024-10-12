@@ -29,7 +29,9 @@ export default function TodoTable({todos}:{todos:ITodo[]}) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {todos.map((todo) => (
+          {
+          todos?.length > 0 &&
+          todos?.map((todo) => (
             <TableRow key={todo.id}>
               <TableCell className="font-medium">{todo.title}</TableCell>
               <TableCell>{todo.body}</TableCell>
@@ -50,7 +52,7 @@ export default function TodoTable({todos}:{todos:ITodo[]}) {
         <TableFooter>
           <TableRow>
             <TableCell colSpan={3}>Total</TableCell>
-            <TableCell className="text-right">$2,500.00</TableCell>
+            <TableCell className="text-right">{todos?.length ?todos?.length:"YOU DON'T HAVE ANY TODO YET!"}</TableCell>
           </TableRow>
         </TableFooter>
       </Table>

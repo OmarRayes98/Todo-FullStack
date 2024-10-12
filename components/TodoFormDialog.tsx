@@ -80,17 +80,17 @@ const defaultValues: Partial<TodoFormValues> = {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-    <DialogTrigger asChild>
+    <DialogTrigger asChild className="ms-auto" >
       <Button>
         {
           isEditDialog?(
             <>
-            <Pen size={16} className="me-1" />
+            <Pen size={16}/>
             </>
           ):
           (
             <>
-            <Plus size={14} className="me-1" />
+            <Plus size={14}/>
             New Todo
             </>
           )
