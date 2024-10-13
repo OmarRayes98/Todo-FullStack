@@ -11,6 +11,7 @@ import {
 import { ITodo } from "@/interfaces"
 import { Badge } from "./ui/badge"
 import TodoTableActions from "./TodoTableActions"
+import LottieHandler from "./LottieHandler/LottieHandler"
   
 
   
@@ -30,7 +31,7 @@ export default function TodoTable({todos}:{todos:ITodo[]}) {
         </TableHeader>
         <TableBody>
           {
-          todos?.length > 0 &&
+          todos?.length > 0 ?
           todos?.map((todo) => (
             <TableRow key={todo.id}>
               <TableCell className="font-medium">{todo.title}</TableCell>
@@ -47,7 +48,16 @@ export default function TodoTable({todos}:{todos:ITodo[]}) {
 
               </TableCell>
             </TableRow>
-          ))}
+          )):
+          <TableRow>
+            <TableCell colSpan={4}>
+            <LottieHandler type="empty" message="There're no Todos ..."  />
+
+            </TableCell>
+          </TableRow>
+
+          
+          }
         </TableBody>
         <TableFooter>
           <TableRow>
